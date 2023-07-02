@@ -44,5 +44,7 @@ class ProductManager {
 const productoMang = new ProductManager();
 productoMang.addProducts("producto1", "description1", 1, "url", "code1", 100);
 productoMang.addProducts("producto1", "description1", 2, "url", "code2", 200);
+productoMang.addProducts("producto1", "description1", 2, "url", "code4", 200);
+
 
 console.log(productoMang.getProducts());
