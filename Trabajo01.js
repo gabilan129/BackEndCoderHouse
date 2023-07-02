@@ -13,7 +13,7 @@ class ProductManager {
       if (contar == 0) {
         return 1;
       } else {
-        return contar + 1;
+        return (this.productos[contar-1].id)+1;
       }
     };
     
@@ -39,12 +39,22 @@ class ProductManager {
       }
     }
   };
+  getProductsById = (id) => {
+    const productoEncontrado = this.productos.find(elem => elem.id === id)
+    if(!productoEncontrado){
+        console.error("Not Found")
+    }else{
+        return productoEncontrado
+    }
+  }
 }
 
 const productoMang = new ProductManager();
 productoMang.addProducts("producto1", "description1", 1, "url", "code1", 100);
-productoMang.addProducts("producto1", "description1", 2, "url", "code2", 200);
-productoMang.addProducts("producto1", "description1", 2, "url", "code4", 200);
+productoMang.addProducts("producto2", "description1", 2, "url", "code2", 200);
+productoMang.addProducts("producto3", "description1", 2, "url", "code3", 200);
 
 
 console.log(productoMang.getProducts());
+
+console.log(productoMang.getProductsById(4))
