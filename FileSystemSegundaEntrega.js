@@ -59,14 +59,33 @@ class ProductManager{
         await fs.writeFile(this.path,JSON.stringify(productoFiltrado))
     }
 
+    updateProducts = async ({id,...producto}) => {
+        await this.deleteProductById(id)
+        let productOld = await this.readProducts()
+        console.log(productOld)
+        let productosMod = [
+            {...producto,id},
+            ...productOld
+        ]
+       await fs.writeFile(this.path,JSON.stringify(productosMod))
+    }
+
 }
 
 
 const productos = new ProductManager()
 
-/*productos.addProduct("producto1","el producto1",4000,"url","code1",500)
+productos.addProduct("producto1","el producto1",4000,"url","code1",500)
 productos.addProduct("producto2","el producto2",3000,"url2","code2",1500)
 productos.addProduct("producto3","el producto2",3000,"url2","code2",1500)
-*/
+
 //productos.getProductsById(1) 
-productos.deleteProductById(2)
+//productos.deleteProductById(2)
+
+productos.updateProducts( {title: 'producto1',
+description: 'el producto1',
+price: 14000,
+img: 'url',
+code: 'code1',
+stock: 500,
+id: 1})
