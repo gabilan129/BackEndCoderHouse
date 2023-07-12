@@ -2,7 +2,7 @@ import {promises as fs } from "fs"
 
 class ProductManager{
     constructor(){
-        this.path = "./productos.json"
+        this.path = "./productos.txt"
         this.producto = []
     }
 
@@ -25,15 +25,48 @@ class ProductManager{
         this.producto.push(newProduct)
 
         
-    await fs.writeFile(this.path,JSON.stringify(this.producto))
+        await fs.writeFile(this.path,JSON.stringify(this.producto))
     
 
+    }
+
+    readProducts = async () => {
+        let respuesta = await fs.readFile(this.path,"utf-8")
+        return JSON.parse(respuesta)
+
+    }
+
+    getProducts = async () => {
+        let respuestaDos = await this.readProducts()   
+        return console.log(respuestaDos)
+}
+
+    getProductsById = async (id) => {
+        let respuestaTres = await this.readProducts()   
+        let filtro = respuestaTres.find(producto => producto.id === id)
+        console.log(filtro)
+
+        if(filtro === undefined){
+            console.log("producto no encontrado")
+        }
+
+    }
+
+    deleteProductById = async (id) => {
+        let respuesta3 = await this.readProducts()
+        let productoFiltrado = respuesta3.filter(productos => productos.id != id)
+        console.log(productoFiltrado)
+        await fs.writeFile(this.path,JSON.stringify(productoFiltrado))
     }
 
 }
 
 
-const productos = new ProductManager
+const productos = new ProductManager()
 
-productos.addProduct("producto1","el producto1",4000,"url","code1",500)
-productos.addProduct("producto2","el producto3",4500,"url","code2",100)
+/*productos.addProduct("producto1","el producto1",4000,"url","code1",500)
+productos.addProduct("producto2","el producto2",3000,"url2","code2",1500)
+productos.addProduct("producto3","el producto2",3000,"url2","code2",1500)
+*/
+//productos.getProductsById(1) 
+productos.deleteProductById(2)
